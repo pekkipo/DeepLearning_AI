@@ -1,0 +1,38 @@
+import gym
+
+# Stabilizing the pole
+
+env =  gym.make('CartPole-v0') # different environments possible, check out the docs
+
+# env here is [hor pos, hor velo, angle of pole, angular velocity]
+
+print('initial obs')
+observation = env.reset()
+print(observation)
+
+# render the env
+for _ in range(100):  # _ since I dont use the variable here anyhow
+    env.render() # that is to show the cart as an animation
+    """
+    action = env.action_space.sample()
+    observation, reward, done, info = env.step(action)  # random action from action space
+    # returns
+    # this gives back observation like angles, velocities etc
+    # reward achieved after the passed action
+    # done variable, says if game is lost, result achieved or smth like this
+    # can use it in a for loop with while done=False
+    # info
+    """
+
+    cart_pos, cart_vel, pole_ang, ang_vel = observation
+
+    # create our action or policy basically
+    if pole_ang > 0:  # starting to lean towards the right
+        action = 1  # move the cart to the right
+    else:  # angle s going to be negative
+        action = 0  # move to the left
+
+    observation, reward, done, info = env.step(action)
+
+
+env.env.close() # to avoid the sys error
